@@ -21,7 +21,7 @@ git.short(function (str) {
  * Get port from environment and store in Express.
  */
 
-var defaultPort = (app.get('env') === 'development') ? '3000' : '80';
+var defaultPort = '3000';
 var port = normalizePort(process.env.PORT || defaultPort);
 app.set('port', port);
 

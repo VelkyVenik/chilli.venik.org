@@ -3,7 +3,7 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'chilli' });
+  res.render('index', { temperature: req.options.temperature });
 });
 
 module.exports = router;

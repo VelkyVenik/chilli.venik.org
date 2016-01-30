@@ -7,6 +7,7 @@ var bunyan = require('bunyan')
 var bunyanDebugStream = require('bunyan-debug-stream')
 
 var generalRoutes = require('./routes/index')
+var temperatureRoutes = require('./routes/temperature')
 
 var reqLogger = require('./src/expressLogger')
 
@@ -41,6 +42,7 @@ app.log = logger // hack :)
 var options = {}
 options['log'] = logger
 options['app'] = app
+options['temperature'] = -1
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'))
@@ -65,6 +67,7 @@ app.use(function(req, res, next) {
 
 // Routing
 app.use('/', generalRoutes)
+app.use('/temperature', temperatureRoutes)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
