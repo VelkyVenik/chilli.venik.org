@@ -1,0 +1,31 @@
+{
+  "name": "chilli.venik.org",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www",
+    "dev": "supervisor ./bin/www"
+  },
+  "dependencies": {
+    "async": "^1.5.0",
+    "body-parser": "~1.14.1",
+    "bunyan": "^1.5.1",
+    "bunyan-debug-stream": "^1.0.7",
+    "cookie-parser": "~1.4.0",
+    "express": "~4.13.1",
+    "git-rev": "^0.2.1",
+    "jade": "~1.11.0",
+    "moment": "^2.10.6",
+    "serve-favicon": "~2.3.0",
+    "underscore": "^1.8.3"
+  },
+  "description": "chilli.venik.org",
+  "main": "app.js",
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/VelkyVenik/chilli.venik.org.git"
+  },
+  "author": "Vaclav Slajs <venik@venik.org>",
+  "license": "ISC"
+}
