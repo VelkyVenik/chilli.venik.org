@@ -10,6 +10,7 @@ var generalRoutes = require('./routes/index')
 var temperatureRoutes = require('./routes/temperature')
 
 var reqLogger = require('./src/expressLogger')
+var config = require('./config');
 
 var app = express()
 
@@ -43,13 +44,7 @@ var promise = require('bluebird');
 var pgp = require('pg-promise')({
     promiseLib: promise
 });
-var conn;
-if (app.get('env') === 'production') {
-  conn = "postgres://chilli:VelmiTajn0Heslo@localhost/chilli?ssl=true"
-} else {
-  conn = "postgres://chilli:VelmiTajn0Heslo@kraken.venik.org/chilli?ssl=true";
-}
-var db = pgp(conn);
+var db = pgp(config.db.conn);
 
 var options = {}
 options['log'] = logger

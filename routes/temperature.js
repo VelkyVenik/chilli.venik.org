@@ -1,10 +1,11 @@
 var express = require('express');
 var router = express.Router();
+var config = require('../config');
 
 router.all('*', function(req, res, next) {
   var auth =req.body.auth;
   req.options.log.info('New remote request, auth =', auth);
-  if (auth === 'kolo') {
+  if (auth === config.secret) {
     next();
   } else {
     req.options.log.warn('Remote clinet authentication failed');

@@ -1,0 +1,6 @@
+exports.db = {
+  // conn : 'postgres://chilli:VelmiTajn0Heslo@localhost/chilli?ssl=true'
+  conn : 'postgres://chilli:VelmiTajn0Heslo@kraken.venik.org/chilli?ssl=true'
+}
+
+exports.secret = 'ApiSecret'
