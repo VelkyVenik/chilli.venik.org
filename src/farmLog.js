@@ -56,6 +56,21 @@ function farmLog(options) {
         cb(error);
       })
   }
+
+  this.getLog = function(cb) {
+    this.db.query('select timestamp, temp0 from "farmLog" order by timestamp asc')
+      .then(function(data) {
+        var retval;
+        retval = _.map(data, function(i) {
+          return [moment(i.timestamp).valueOf(), parseFloat(i.temp0)];
+        })
+        cb(retval);
+      })
+      .catch(function(error) {
+        console.error(error);
+        cb(error);
+      })
+  }
 };
 
 module.exports = farmLog;

@@ -8,6 +8,8 @@ var bunyanDebugStream = require('bunyan-debug-stream')
 
 var generalRoutes = require('./routes/index')
 var farmLogRoutes = require('./routes/farmLog')
+var farmLogAPI = require('./routes/farmLogAPI')
+
 
 var reqLogger = require('./src/expressLogger')
 var farmLog = require('./src/farmLog')
@@ -77,7 +79,9 @@ app.use(function(req, res, next) {
 
 // Routing
 app.use('/', generalRoutes)
-app.use('/farmLog', farmLogRoutes)
+app.use('/log', farmLogRoutes)
+app.use('/farmLog', farmLogAPI)
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
