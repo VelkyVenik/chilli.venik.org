@@ -43,10 +43,7 @@ var logger = bunyan.createLogger({
 })
 app.log = logger // hack :)
 
-var promise = require('bluebird');
-var pgp = require('pg-promise')({
-    promiseLib: promise
-});
+var pgp = require('pg-promise')();
 var db = pgp(config.db.conn);
 
 var options = {}
