@@ -4,3 +4,5 @@ exports.db = {
 }
 
 exports.secret = 'ApiSecret'
+
+exports.uploadDir = './tmp/'
