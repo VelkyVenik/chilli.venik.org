@@ -39,10 +39,22 @@ var logger = bunyan.createLogger({
 })
 app.log = logger // hack :)
 
+var promise = require('bluebird');
+var pgp = require('pg-promise')({
+    promiseLib: promise
+});
+var conn;
+if (app.get('env') === 'production') {
+  conn = "postgres://chilli:VelmiTajn0Heslo@localhost/chilli?ssl=true"
+} else {
+  conn = "postgres://chilli:VelmiTajn0Heslo@kraken.venik.org/chilli?ssl=true";
+}
+var db = pgp(conn);
+
 var options = {}
 options['log'] = logger
 options['app'] = app
-options['temperature'] = -1
+options['db'] = db
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'))

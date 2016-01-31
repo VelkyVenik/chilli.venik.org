@@ -3,7 +3,14 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { temperature: req.options.temperature });
+  req.options.db.one('select temperature from statistics order by time desc limit 1')
+    .then(function(data){
+      res.render('index', data);
+    })
+    .catch(function(error){
+      next(error);
+    });
+
 });
 
 module.exports = router;
