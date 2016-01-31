@@ -22,7 +22,23 @@ jQuery(document).ready(function() {
       title: {
         text: 'Temperature (°C)'
       },
-
+      plotLines: [{
+        value: 25,
+        color: 'green',
+        dashStyle: 'shortdash',
+        width: 2,
+        label: {
+          text: 'Minimum temp.'
+        },
+      }, {
+          value: 30,
+          color: 'green',
+          dashStyle: 'shortdash',
+          width: 2,
+          label: {
+            text: 'Maximum temp.'
+          }
+      }]
     },
     series: [],
     tooltip: {
