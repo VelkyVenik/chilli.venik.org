@@ -8,7 +8,7 @@ var config = require('../config');
 
 var upload = multer({ dest: config.uploadDir });
 
-router.all('*', function(req, res, next) {
+router.all('*', upload.single('photo'), function(req, res, next) {
   var auth = req.body.auth;
   req.options.log.info('New remote request, auth =', auth);
   if (auth === config.secret) {
