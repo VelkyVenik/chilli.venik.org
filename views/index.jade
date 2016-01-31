@@ -1,6 +1,24 @@
 extends layout
 
 block content	
-	h4 Current temperature is #{temperature} °C
+	h4 Chilli farm overview
+
+	table.table.table-striped.table-responsive
+		tbody
+			tr
+				td Temperature
+				td #{temp0} °C
+			tr
+				td Light
+				td #{lightState}
+			tr
+				td Last Update
+				td #{lastUpdate}
+			tr
+				td System Uptime
+				td #{sysUpTime}
+			tr
+				td System Temperature
+				td #{sysTemp0} °C
 	
 	img.img-responsive(src="img/latest.jpg")

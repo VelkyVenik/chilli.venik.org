@@ -7,10 +7,11 @@ var bunyan = require('bunyan')
 var bunyanDebugStream = require('bunyan-debug-stream')
 
 var generalRoutes = require('./routes/index')
-var temperatureRoutes = require('./routes/temperature')
+var farmLogRoutes = require('./routes/farmLog')
 
 var reqLogger = require('./src/expressLogger')
-var config = require('./config');
+var farmLog = require('./src/farmLog')
+var config = require('./config')
 
 var app = express()
 
@@ -50,6 +51,7 @@ var options = {}
 options['log'] = logger
 options['app'] = app
 options['db'] = db
+options['farmLog'] = new farmLog(options)
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'))
@@ -62,6 +64,7 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({
     extended: false
 }))
+
 app.use(cookieParser())
 app.use(express.static(path.join(__dirname, 'public')))
 // app.use(favicon(__dirname + '/public/favicon.ico'));
@@ -74,7 +77,7 @@ app.use(function(req, res, next) {
 
 // Routing
 app.use('/', generalRoutes)
-app.use('/temperature', temperatureRoutes)
+app.use('/farmLog', farmLogRoutes)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
