@@ -88,10 +88,16 @@ jQuery(document).ready(function() {
 
             chart.addSeries({
                 name: 'RPi Temperature',
-                data: data.sysTemp0,
+                data: data.rpiTemp,
                 visible: false
             });
-        });
+
+            chart.addSeries({
+                name: 'Arduino Temperature',
+                data: data.ardTemp,
+                visible: false
+            });
+         });
     }
 
     refreshData();

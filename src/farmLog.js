@@ -1,7 +1,7 @@
 var moment = require('moment');
 var _ = require('underscore');
 
-var dataItems = ['temp0', 'temp1', 'sysTemp0', 'sysTemp1', 'sysUpTime', 'lightState'];
+var dataItems = ['temp0', 'temp1', 'sysTemp0', 'sysTemp1', 'sysTemp2', 'sysUpTime', 'lightState'];
 
 
 function farmLog(options) {
@@ -56,19 +56,22 @@ function farmLog(options) {
     }
 
     this.getLog = function(cb) {
-        this.db.query('select timestamp, temp0, "sysTemp0" from "farmLog" order by timestamp asc')
+        this.db.query('select timestamp, temp0, "sysTemp0", "sysTemp2" from "farmLog" order by timestamp asc')
             .then(function(data) {
                 var retval = {
                     soilTemp: [],
-                    sysTemp0: []
+                    rpiTemp: [],
+                    ardTemp: []
                 };
 
                 _.each(data, function(i) {
                     if (i.temp0)
                         retval.soilTemp.push([moment(i.timestamp).valueOf(), parseFloat(i.temp0)]);
                     if (i.sysTemp0)
-                        retval.sysTemp0.push([moment(i.timestamp).valueOf(), parseFloat(i.sysTemp0)]);
-                });
+                        retval.rpiTemp.push([moment(i.timestamp).valueOf(), parseFloat(i.sysTemp0)]);
+                    if (i.sysTemp2)
+                        retval.ardTemp.push([moment(i.timestamp).valueOf(), parseFloat(i.sysTemp2)]);
+                 });
 
                 cb(retval);
             })
