@@ -14,9 +14,8 @@ function debug()
 {
     if [ "$DEBUG" -eq "1" ]; then
         echo $1
+        echo $(date) $1 >> ${LOGDIR}/debug.log
     fi
-
-    #echo $(date) $1 >> ${LOGDIR}/debug.log
 }
 
 function warn()
