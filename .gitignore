@@ -34,3 +34,8 @@ npm-debug.log
 
 # Configuration
 config.js
+utils/pi/config-local.sh
+
+# File Uploads
+tmp/*
+public/img/latestPhoto.jpg
