@@ -7,6 +7,8 @@ cd $(dirname $(readlink -f $0))
 
 script_start $*
 
+lock
+
 F="${DATADIR}/wemo-${WEMO_NAME}-on"
 RETVAL=0
 

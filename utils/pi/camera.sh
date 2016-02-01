@@ -7,6 +7,8 @@ cd $(dirname $(readlink -f $0))
 
 script_start $*
 
+lock
+
 FILE=$(date +%Y%m%d%H%M).jpg
 D=$(date +"%Y-%m-%d %R")
 

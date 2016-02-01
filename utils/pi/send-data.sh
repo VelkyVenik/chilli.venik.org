@@ -7,6 +7,7 @@ cd $(dirname $(readlink -f $0))
 
 script_start $*
 
+lock
 
 UP=$(uptime -p)
 
