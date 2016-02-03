@@ -70,13 +70,12 @@ debug "airTemp=$AIRTEMP soilTemp=$SOILTEMP rpiTemp=$RPITEMP sysUpTime=$UP soilHu
 
 
 curl -i -X POST -d "auth=$API_SECRET" \
-    -d "temp0=$SOILTEMP" \
+    -d "airTemp=$AIRTEMP" \
+    -d "soilTemp=$SOILTEMP" \
+    -d "rpiTemp=$RPITEMP" \
     -d "sysUpTime=$UP" \
-    -d "lightState=$LIGHT" \
-    -d "sysTemp0=$SYSTEMP0" \
-    -d "sysTemp1=$SYSTEMP1" \
-    -d "sysFreq0=$SYSFREQ" \
-    -d "sysTemp2=$ARDTEMP" \
+    -d "soilHum=$SOILHUM" \
+    -d "airHum=$AIRHUM" \
     $API_URL/add >/dev/null 2>&1
 
 script_end
