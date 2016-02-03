@@ -97,6 +97,24 @@ jQuery(document).ready(function() {
                 data: data.ardTemp,
                 visible: false
             });
+
+            chart.addSeries({
+                name: 'Air Temperature',
+                data: data.airTemp,
+                visible: false
+            });
+
+            chart.addSeries({
+                name: 'Soil Humidity',
+                data: data.soilHum1,
+                visible: false
+            });
+
+            chart.addSeries({
+                name: 'Air Humidity',
+                data: data.airHum,
+                visible: false
+            });
          });
     }
 

@@ -4,10 +4,13 @@
 
 #define pinClock      8
 #define pinData       9
+
 #define oneWireData   10
 
-#define DHTPIN 11         // what digital pin we're connected to
-#define DHTTYPE DHT22     // DHT 22  (AM2302), AM2321
+#define DHTPIN        11        // what digital pin we're connected to
+#define DHTTYPE       DHT22     // DHT 22  (AM2302), AM2321
+
+#define SOILPIN       0         // Soit humidity sensor 
 
 byte numbersData[]  = {
   B11101101,    // 0
@@ -103,10 +106,12 @@ void startAnimation()
 void setup() {
   pinMode(pinClock, OUTPUT);
   pinMode(pinData, OUTPUT);
+  pinMode(6, OUTPUT);
 
   ADMUX = 0xC8;         // Internal temperature sensor
 
   Serial.begin(9600);
+  Serial.print("Start\n");
 
   dht.begin();          //DHT22 sensor
 
@@ -228,11 +233,14 @@ void loop() {
     return;
   }
 
+  float soilHum = 100 - ((((float)(analogRead(SOILPIN) - 200))) / 460 * 100);
+
   char buffer[128];
-  snprintf(buffer, 128, "START soilTemp=%d.%d airHum=%d.%d airTemp=%d.%d END\n",
+  snprintf(buffer, 128, "START soilTemp=%d.%d airHum=%d.%d airTemp=%d.%d soilHum=%d.%d END\n",
            (int)soilTemp, (int) ((soilTemp - (float)((int) soilTemp)) * 100),
            (int)airHum, (int) ((airHum - (float)((int) airHum)) * 100),
-           (int)airTemp, (int) ((airTemp - (float)((int) airTemp)) * 100)
+           (int)airTemp, (int) ((airTemp - (float)((int) airTemp)) * 100),
+           (int)soilHum, (int) ((soilHum - (float)((int) soilHum)) * 100)
           );
   Serial.print(buffer);
   

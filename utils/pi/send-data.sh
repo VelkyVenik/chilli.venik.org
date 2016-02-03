@@ -35,8 +35,14 @@ do
             soilTemp)
                 SOILTEMP=$value
                 ;;
-            ardTemp)
-                ARDTEMP=$value
+            soilHum)
+                SOILHUM=$value
+                ;;
+            airTemp)
+                AIRTEMP=$value
+                ;; 
+            airHum)
+                AIRHUM=$value
                 ;;
         esac
     done
