@@ -1,21 +1,21 @@
 extends layout
 
 block content	
-	h4 Chilli farm overview
+    h4 Chilli farm overview
 
-	table.table.table-striped.table-responsive
-		tbody
-			tr
-				td Temperature
-				td #{temp0} °C
-			tr
-				td Light
-				td #{lightState}
-			tr
-				td Last Update
-				td #{lastUpdate}
-			tr
-				td System
-				td #{sysUpTime} (#{sysTemp0} °C)
-	
-	img.img-responsive.center-block(src="img/latestPhoto.jpg")
+    table.table.table-striped.table-responsive
+        tbody
+            tr
+                td Soil
+                td #{soilTemp} °C
+            tr
+                td Air
+                td #{airTemp} °C, #{airHum}%
+            tr
+                td Last Update
+                td #{lastUpdate}
+            tr
+                td System
+                td #{sysUpTime}
+
+    img.img-responsive.center-block(src="img/latestPhoto.jpg")
