@@ -18,9 +18,18 @@ jQuery(document).ready(function() {
                 text: null
             }
         },
-        yAxis: {
+        yAxis: [{
             title: {
-                text: 'Temperature (°C)'
+                text: 'Temperature',
+                style: {
+                    color: Highcharts.getOptions().colors[2]
+                }
+            },
+            labels: {
+                format: '{value}°C',
+                style: {
+                    color: Highcharts.getOptions().colors[2]
+                }
             },
             plotLines: [{
                 value: 25,
@@ -39,40 +48,26 @@ jQuery(document).ready(function() {
                     text: 'Maximum temp.'
                 }
             }]
-        },
-        series: [],
+        }, {
+            title: {
+                text: 'Humidity',
+                style: {
+                    color: Highcharts.getOptions().colors[0]
+                }
+            },
+            labels: {
+                format: '{value}%',
+                style: {
+                    color: Highcharts.getOptions().colors[0]
+                }
+            },
+            opposite: true
+        }],
         tooltip: {
-            valueSuffix: '°C'
+            shared: true
         },
-        plotOptions: {
-            area: {
-                fillColor: {
-                    linearGradient: {
-                        x1: 0,
-                        y1: 0,
-                        x2: 0,
-                        y2: 1
-                    },
-                    stops: [
-                        [0, Highcharts.getOptions().colors[0]],
-                        [1, Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0).get(
-                            'rgba')]
-                    ]
-                },
-                lineWidth: 1,
-                marker: {
-                    enabled: false
-                },
-                shadow: false,
-                states: {
-                    hover: {
-                        lineWidth: 1
-                    }
-                },
-                threshold: null
-            }
-        }
-    };
+        series: []
+   };
 
     chart = new Highcharts.Chart(options);
 
@@ -83,39 +78,63 @@ jQuery(document).ready(function() {
 
             chart.addSeries({
                 name: 'Soil Temperature',
-                data: data.soilTemp
+                data: data.soilTemp,
+                yAxis: 0,
+                tooltip: {
+                    valueSuffix: ' °C'
+                }
             });
 
             chart.addSeries({
                 name: 'RPi Temperature',
                 data: data.rpiTemp,
-                visible: false
+                visible: false,
+                yAxis: 0,
+                tooltip: {
+                    valueSuffix: ' °C'
+                }
             });
 
             chart.addSeries({
                 name: 'Arduino Temperature',
                 data: data.ardTemp,
-                visible: false
+                visible: false,
+                yAxis: 0,
+                tooltip: {
+                    valueSuffix: ' °C'
+                }
             });
 
             chart.addSeries({
                 name: 'Air Temperature',
                 data: data.airTemp,
-                visible: false
+                visible: false,
+                yAxis: 0,
+                tooltip: {
+                    valueSuffix: ' °C'
+                }
             });
 
             chart.addSeries({
                 name: 'Soil Humidity',
                 data: data.soilHum1,
-                visible: false
+                visible: false,
+                yAxis: 1,
+                tooltip: {
+                    valueSuffix: '%'
+                }
             });
 
             chart.addSeries({
                 name: 'Air Humidity',
                 data: data.airHum,
-                visible: false
+                visible: true,
+                yAxis: 1,
+                tooltip: {
+                    valueSuffix: '%'
+                }
             });
-         });
+        });
     }
 
     refreshData();
