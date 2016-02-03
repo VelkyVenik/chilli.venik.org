@@ -207,37 +207,6 @@ float getSoilTemp()
   return temp / 3;
 }
 
-float getSysTemp(void)
-{
-  unsigned int wADC;
-  double t;
-
-  // The internal temperature has to be used
-  // with the internal reference of 1.1V.
-  // Channel 8 can not be selected with
-  // the analogRead function yet.
-
-  // Set the internal reference and mux.
-  ADMUX = (_BV(REFS1) | _BV(REFS0) | _BV(MUX3));
-  ADCSRA |= _BV(ADEN);  // enable the ADC
-
-  delay(20);            // wait for voltages to become stable.
-
-  ADCSRA |= _BV(ADSC);  // Start the ADC
-
-  // Detect end-of-conversion
-  while (bit_is_set(ADCSRA, ADSC));
-
-  // Reading register "ADCW" takes care of how to read ADCL and ADCH.
-  wADC = ADCW;
-
-  // The offset of 324.31 could be wrong. It is just an indication.
-  t = (wADC - 324.31 ) / 1.22;
-
-  // The returned temperature is in degrees Celcius.
-  return (t);
-}
-
 void displayValue(int v, int p)
 {
   noInterrupts();
@@ -250,7 +219,6 @@ void displayValue(int v, int p)
 void loop() {
   // Soil temperature
   float soilTemp = getSoilTemp();
-  float sysTemp = getSysTemp();
   displayValue((int) (soilTemp * 10), 1);
 
   float airHum = dht.readHumidity();
@@ -261,9 +229,8 @@ void loop() {
   }
 
   char buffer[128];
-  snprintf(buffer, 128, "START soilTemp=%d.%d ardTemp=%d.%d airHum=%d.%d airTemp=%d.%d END\n",
+  snprintf(buffer, 128, "START soilTemp=%d.%d airHum=%d.%d airTemp=%d.%d END\n",
            (int)soilTemp, (int) ((soilTemp - (float)((int) soilTemp)) * 100),
-           (int)sysTemp, (int) ((sysTemp - (float)((int) sysTemp)) * 100),
            (int)airHum, (int) ((airHum - (float)((int) airHum)) * 100),
            (int)airTemp, (int) ((airTemp - (float)((int) airTemp)) * 100)
           );
