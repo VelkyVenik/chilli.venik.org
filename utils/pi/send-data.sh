@@ -61,13 +61,12 @@ cpuTemp0=$(cat /sys/class/thermal/thermal_zone0/temp)
 cpuTemp1=$(($cpuTemp0/1000))
 cpuTemp2=$(($cpuTemp0/100))
 cpuTempM=$(($cpuTemp2 % $cpuTemp1))
-cpuFreq=$(cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq)
+#cpuFreq=$(cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq)
 
-SYSTEMP0="$cpuTemp1"."$cpuTempM"
-SYSTEMP1=$(/opt/vc/bin/vcgencmd measure_temp | sed -e"s/temp=\(.*\).C/\1/")
-SYSFREQ=$(($cpuFreq/1000))
+RPITEMP="$cpuTemp1"."$cpuTempM"
+#SYSFREQ=$(($cpuFreq/1000))
 
-debug "temp0=$SOILTEMP sysUpTime=$UP lightState=$LIGHT sysTemp0=$SYSTEMP0 sysTemp1=$SYSTEMP1 sysFreq0=$SYSFREQ sysTemp2=$ARDTEMP"
+debug "airTemp=$AIRTEMP soilTemp=$SOILTEMP rpiTemp=$RPITEMP sysUpTime=$UP soilHum=$SOILHUM airHum=$AIRHUM"
 
 
 curl -i -X POST -d "auth=$API_SECRET" \
