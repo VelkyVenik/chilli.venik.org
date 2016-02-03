@@ -1,9 +1,13 @@
+#include <DHT.h>        // https://github.com/adafruit/DHT-sensor-library
+#include <OneWire.h>    // https://github.com/PaulStoffregen/OneWire
 #include <EEPROM.h>
-#include <OneWire.h>
 
 #define pinClock      8
 #define pinData       9
 #define oneWireData   10
+
+#define DHTPIN 11         // what digital pin we're connected to
+#define DHTTYPE DHT22     // DHT 22  (AM2302), AM2321
 
 byte numbersData[]  = {
   B11101101,    // 0
@@ -68,6 +72,7 @@ byte animationData3[][3] =
 };
 
 OneWire  ds(oneWireData);  // on pin 10 (a 4.7K resistor is necessary)
+DHT dht(DHTPIN, DHTTYPE);
 
 void startAnimation()
 {
@@ -99,9 +104,14 @@ void setup() {
   pinMode(pinClock, OUTPUT);
   pinMode(pinData, OUTPUT);
 
+  ADMUX = 0xC8;         // Internal temperature sensor
+
   Serial.begin(9600);
 
-  startAnimation();
+  dht.begin();          //DHT22 sensor
+
+  //  startAnimation();
+  
 }
 
 
@@ -243,15 +253,26 @@ void loop() {
   float sysTemp = getSysTemp();
   displayValue((int) (soilTemp * 10), 1);
 
+  float airHum = dht.readHumidity();
+  float airTemp = dht.readTemperature();
+  if (isnan(airHum) || isnan(airTemp)) {
+    Serial.println("ERR Failed to read from DHT sensor!");
+    return;
+  }
+
   char buffer[128];
-  snprintf(buffer, 128, "START soilTemp=%d.%d ardTemp=%d.%d END\n",
+  snprintf(buffer, 128, "START soilTemp=%d.%d ardTemp=%d.%d airHum=%d.%d airTemp=%d.%d END\n",
            (int)soilTemp, (int) ((soilTemp - (float)((int) soilTemp)) * 100),
-           (int)sysTemp, (int) ((sysTemp - (float)((int) sysTemp)) * 100)
+           (int)sysTemp, (int) ((sysTemp - (float)((int) sysTemp)) * 100),
+           (int)airHum, (int) ((airHum - (float)((int) airHum)) * 100),
+           (int)airTemp, (int) ((airTemp - (float)((int) airTemp)) * 100)
           );
   Serial.print(buffer);
+  
   // How to parse it in Bash
   // retval=$(cat /dev/ttyUSBxx)
   // for i in $retval; do echo $i | sed -e "s/=.*//"; echo $i | sed -e "s/.*=//"; done
-  
+
   delay(500);
 }
+
