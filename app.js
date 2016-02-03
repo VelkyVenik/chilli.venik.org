@@ -20,8 +20,8 @@ var logger = bunyan.createLogger({
     name: 'chilli',
     serializers: bunyanDebugStream.serializers,
     streams: [{
-        //level: (app.get('env') === 'development') ? 'debug' : 'info',
-        level: 'trace',
+        level: (app.get('env') === 'development') ? 'debug' : 'info',
+        //level: 'trace',
         type: 'raw',
         stream: bunyanDebugStream({
             basepath: __dirname, // this should be the root folder of your project.
