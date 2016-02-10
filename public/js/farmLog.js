@@ -67,76 +67,78 @@ jQuery(document).ready(function() {
             shared: true
         },
         series: []
-   };
+    };
 
     chart = new Highcharts.Chart(options);
 
     function refreshData() {
         $.get('/log/getLog', function(data) {
-            while (chart.series.length > 0)
-                chart.series[0].remove(true);
+            chart.series[0].setData(data.soilTemp);
+            chart.series[1].setData(data.rpiTemp);
+            chart.series[2].setData(data.ardTemp);
+            chart.series[3].setData(data.airTemp);
+            chart.series[4].setData(data.soilHum1);
+            chart.series[5].setData(data.airHum);
+        });
 
-            chart.addSeries({
-                name: 'Soil Temperature',
-                data: data.soilTemp,
-                yAxis: 0,
-                tooltip: {
-                    valueSuffix: ' °C'
-                }
-            });
+    }
 
-            chart.addSeries({
-                name: 'RPi Temperature',
-                data: data.rpiTemp,
-                visible: false,
-                yAxis: 0,
-                tooltip: {
-                    valueSuffix: ' °C'
-                }
-            });
+    function addSeries() {
+        chart.addSeries({
+            name: 'Soil Temperature',
+            yAxis: 0,
+            tooltip: {
+                valueSuffix: ' °C'
+            }
+        });
 
-            chart.addSeries({
-                name: 'Arduino Temperature',
-                data: data.ardTemp,
-                visible: false,
-                yAxis: 0,
-                tooltip: {
-                    valueSuffix: ' °C'
-                }
-            });
+        chart.addSeries({
+            name: 'RPi Temperature',
+            visible: false,
+            yAxis: 0,
+            tooltip: {
+                valueSuffix: ' °C'
+            }
+        });
 
-            chart.addSeries({
-                name: 'Air Temperature',
-                data: data.airTemp,
-                visible: false,
-                yAxis: 0,
-                tooltip: {
-                    valueSuffix: ' °C'
-                }
-            });
+        chart.addSeries({
+            name: 'Arduino Temperature',
+            visible: false,
+            yAxis: 0,
+            tooltip: {
+                valueSuffix: ' °C'
+            }
+        });
 
-            chart.addSeries({
-                name: 'Soil Humidity',
-                data: data.soilHum1,
-                visible: false,
-                yAxis: 1,
-                tooltip: {
-                    valueSuffix: '%'
-                }
-            });
+        chart.addSeries({
+            name: 'Air Temperature',
+            visible: false,
+            yAxis: 0,
+            tooltip: {
+                valueSuffix: ' °C'
+            }
+        });
 
-            chart.addSeries({
-                name: 'Air Humidity',
-                data: data.airHum,
-                visible: true,
-                yAxis: 1,
-                tooltip: {
-                    valueSuffix: '%'
-                }
-            });
+        chart.addSeries({
+            name: 'Soil Humidity',
+            visible: false,
+            yAxis: 1,
+            tooltip: {
+                valueSuffix: '%'
+            }
+        });
+
+        chart.addSeries({
+            name: 'Air Humidity',
+            visible: false,
+            yAxis: 1,
+            tooltip: {
+                valueSuffix: '%'
+            }
         });
     }
 
+    addSeries();
     refreshData();
     setInterval(refreshData, 1000 * 60 * 1);
 });
