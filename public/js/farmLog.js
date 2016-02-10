@@ -69,6 +69,12 @@ jQuery(document).ready(function() {
         series: []
     };
 
+    Highcharts.setOptions({
+        global: {
+            useUTC: false
+        }
+    });
+
     chart = new Highcharts.Chart(options);
 
     function refreshData() {
