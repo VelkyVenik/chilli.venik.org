@@ -9,6 +9,32 @@ jQuery(document).ready(function() {
             renderTo: 'chart'
 
         },
+        navigator: {
+            enabled: false
+        },
+        rangeSelector: {
+            selected: 0,
+            buttons: [{
+                type: 'day',
+                count: 1,
+                text: 'd'
+            }, {
+                type: 'day',
+                count: 3,
+                text: '3d'
+            }, {
+                type: 'week',
+                count: 1,
+                text: 'w'
+            }, {
+                type: 'month',
+                count: 1,
+                text: 'm'
+            }, {
+                type: 'all',
+                text: 'all'
+            }]
+        },
         title: {
             text: 'Chili Farm'
         },
@@ -20,16 +46,10 @@ jQuery(document).ready(function() {
         },
         yAxis: [{
             title: {
-                text: 'Temperature',
-                style: {
-                    color: Highcharts.getOptions().colors[2]
-                }
+                text: 'Temperature'
             },
             labels: {
-                format: '{value}°C',
-                style: {
-                    color: Highcharts.getOptions().colors[2]
-                }
+                format: '{value}°C'
             },
             plotLines: [{
                 value: 25,
@@ -47,24 +67,22 @@ jQuery(document).ready(function() {
                 label: {
                     text: 'Maximum temp.'
                 }
-            }]
+            }],
+            opposite: false
         }, {
             title: {
-                text: 'Humidity',
-                style: {
-                    color: Highcharts.getOptions().colors[0]
-                }
+                text: 'Humidity'
             },
             labels: {
-                format: '{value}%',
-                style: {
-                    color: Highcharts.getOptions().colors[0]
-                }
+                format: '{value}%'
             },
             opposite: true
         }],
         tooltip: {
             shared: true
+        },
+        legend: {
+            enabled: true
         },
         series: []
     };
@@ -75,7 +93,7 @@ jQuery(document).ready(function() {
         }
     });
 
-    chart = new Highcharts.Chart(options);
+    chart = new Highcharts.StockChart(options);
 
     function refreshData() {
         $.get('/log/getLog', function(data) {
@@ -146,5 +164,8 @@ jQuery(document).ready(function() {
 
     addSeries();
     refreshData();
+    chart.series.forEach(function(i) {
+        console.log(i.name, i);
+    })
     setInterval(refreshData, 1000 * 60 * 1);
 });
