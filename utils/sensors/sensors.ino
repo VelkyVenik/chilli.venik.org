@@ -5,12 +5,12 @@
 #define pinClock      8
 #define pinData       9
 
-#define oneWireData   10
+#define oneWireData   3
 
-#define DHTPIN        11        // what digital pin we're connected to
+#define DHTPIN        2         // what digital pin we're connected to
 #define DHTTYPE       DHT22     // DHT 22  (AM2302), AM2321
 
-#define SOILPIN       0         // Soit humidity sensor 
+#define SOILPIN       7         // Soil humidity sensor analog PIN 
 
 byte numbersData[]  = {
   B11101101,    // 0
@@ -224,7 +224,7 @@ void displayValue(int v, int p)
 void loop() {
   // Soil temperature
   float soilTemp = getSoilTemp();
-  displayValue((int) (soilTemp * 10), 1);
+//  displayValue((int) (soilTemp * 10), 1);
 
   float airHum = dht.readHumidity();
   float airTemp = dht.readTemperature();
@@ -233,7 +233,7 @@ void loop() {
     return;
   }
 
-  float soilHum = 100 - ((((float)(analogRead(SOILPIN) - 200))) / 460 * 100);
+  float soilHum = 0; //100 - ((((float)(analogRead(SOILPIN) - 200))) / 460 * 100);
 
   char buffer[128];
   snprintf(buffer, 128, "START soilTemp=%d.%d airHum=%d.%d airTemp=%d.%d soilHum=%d.%d END\n",
