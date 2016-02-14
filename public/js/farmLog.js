@@ -13,8 +13,12 @@ jQuery(document).ready(function() {
             enabled: false
         },
         rangeSelector: {
-            selected: 0,
+            selected: 1,
             buttons: [{
+                type: 'minute',
+                count: 60,
+                text: 'h'
+            }, {
                 type: 'day',
                 count: 1,
                 text: 'd'
@@ -164,8 +168,5 @@ jQuery(document).ready(function() {
 
     addSeries();
     refreshData();
-    chart.series.forEach(function(i) {
-        console.log(i.name, i);
-    })
     setInterval(refreshData, 1000 * 60 * 1);
 });
