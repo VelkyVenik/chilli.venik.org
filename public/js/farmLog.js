@@ -107,8 +107,18 @@ jQuery(document).ready(function() {
             chart.series[3].setData(data.airTemp);
             chart.series[4].setData(data.soilHum1);
             chart.series[5].setData(data.airHum);
+            chart.series[6].setData(data.heating);
+            chart.series[7].setData(data.light);
         });
 
+    }
+
+    function seriesFormatterStatus() {
+        var status = 'off';
+        if (this.y > 0)
+            status = 'on';
+
+        return '<span style="color:' + this.color + '">\u25CF</span> ' + this.series.name + ': <b>' + status + '</b><br/>'
     }
 
     function addSeries() {
@@ -164,6 +174,25 @@ jQuery(document).ready(function() {
                 valueSuffix: '%'
             }
         });
+
+        chart.addSeries({
+            name: 'Heating',
+            visible: false,
+            yAxis: 0,
+            tooltip: {
+                pointFormatter: seriesFormatterStatus
+            }
+        });
+
+        chart.addSeries({
+            name: 'Light',
+            visible: false,
+            yAxis: 0,
+            tooltip: {
+                pointFormatter: seriesFormatterStatus
+            }
+        });
+
     }
 
     addSeries();

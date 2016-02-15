@@ -66,11 +66,15 @@ function farmLog(options) {
                     _.each(dataItems, function(item) {
                         if (_.contains(['timestamp', 'sysUpTime'], item))
                             return;
+                        
+                        var m = 1;
+                        if (_.contains(['heating', 'light'], item))
+                            m = 10;
 
                         if (!retval[item])
                             retval[item] = [];
                         if ((record[item]) || (record[item] == '0'))
-                            retval[item].push([moment(record.timestamp).valueOf(), parseFloat(record[item])]);
+                            retval[item].push([moment(record.timestamp).valueOf(), parseFloat(record[item]) * m]);
                     });
                 });
 
