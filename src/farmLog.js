@@ -1,7 +1,9 @@
 var moment = require('moment');
 var _ = require('underscore');
 
-var dataItems = ['sysUpTime', 'soilTemp', 'airTemp', 'rpiTemp', 'ardTemp', 'soilHum1', 'soilHum2', 'airHum'];
+var dataItems = ['sysUpTime', 'soilTemp', 'airTemp', 'rpiTemp', 'ardTemp', 'soilHum1', 'soilHum2', 'airHum',
+    'heating', 'light'
+];
 
 
 function farmLog(options) {
@@ -67,7 +69,7 @@ function farmLog(options) {
 
                         if (!retval[item])
                             retval[item] = [];
-                        if (record[item])
+                        if ((record[item]) || (record[item] == '0'))
                             retval[item].push([moment(record.timestamp).valueOf(), parseFloat(record[item])]);
                     });
                 });
