@@ -80,12 +80,12 @@ curl -i -X POST -d "auth=$API_SECRET" \
 
 if (( $(echo "$SOILTEMP < $LOW_TEMP" |bc -l) )); then
     debug "Soil temperature $SOILTEMP - turning heating on"
-    ./heating 1
+    ./heating.sh 1
 fi
 
 if (( $(echo "$SOILTEMP > $HIGH_TEMP" |bc -l) )); then
     debug "Soil temperature $SOILTEMP - turning heating off"
-    ./heating 0
+    ./heating.sh 0
 fi
 
 script_end
