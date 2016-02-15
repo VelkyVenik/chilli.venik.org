@@ -81,6 +81,14 @@ jQuery(document).ready(function() {
                 format: '{value}%'
             },
             opposite: true
+        }, {
+            title: {
+                text: null
+            },
+            labels: {
+                enabled: false
+            },
+            opposite: true
         }],
         tooltip: {
             shared: true
@@ -178,7 +186,7 @@ jQuery(document).ready(function() {
         chart.addSeries({
             name: 'Heating',
             visible: false,
-            yAxis: 0,
+            yAxis: 2,
             tooltip: {
                 pointFormatter: seriesFormatterStatus
             }
@@ -187,7 +195,7 @@ jQuery(document).ready(function() {
         chart.addSeries({
             name: 'Light',
             visible: false,
-            yAxis: 0,
+            yAxis: 2,
             tooltip: {
                 pointFormatter: seriesFormatterStatus
             }
