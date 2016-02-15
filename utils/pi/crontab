@@ -1,2 +1,5 @@
 */30 *  * * *   root    /opt/chilli/bin/camera.sh
 */1  *  * * *   root    /opt/chilli/bin/send-data.sh
+
+0 7     * * *   root    /opt/chilli/bin/light.sh 1
+0 22    * * *   root    /opt/chilli/bin/light.sh 0
