@@ -13,7 +13,8 @@ LOGDIR=${DIR}/log
 WEMO_NAME=chilli
 
 # Camera configuration
-CAMERA_CHECK_WEMO=1
+CAMERA_CHECK_WEMO=0
+CAMERA_CHECK_GPIO=1
 CAMERA_SHOT_WEB=0
 CAMERA_SHOT_PI=1
 CAMERA_SHOT_URL="http://192.168.88.7:8080/?action=snapshot"
@@ -25,6 +26,10 @@ API_URL=""
 
 # Arduiono
 ARDUINO_DEV="/dev/ttyACM0"
+
+# Temperatures
+HIGH_TEMP="30.0"
+LOW_TEMP="25.0"
 
 
 if [ -e "config-local.sh" ]; then

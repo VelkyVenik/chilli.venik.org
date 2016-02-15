@@ -22,6 +22,16 @@ if [ "$CAMERA_CHECK_WEMO" -eq 1 ]; then
     fi
 fi
 
+if [ "$CAMERA_CHECK_GPIO" -eq 1 ]; then
+    ./light.sh
+    RETVAL=$?
+    if [ "$RETVAL" -ne 1 ]; then
+        debug "Light is off, no camera pictures..."
+        script_end
+        exit -1
+    fi
+fi
+
 if [ "$CAMERA_SHOT_WEB" -eq 1 ]; then
     debug "Taking camera picture from web: $FILE"
     wget $CAMERA_SHOT_URL -O - -a ${LOGDIR}/camera-shot.log | \

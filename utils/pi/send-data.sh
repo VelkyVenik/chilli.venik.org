@@ -49,13 +49,11 @@ do
     break
 done < $ARDUINO_DEV
 
-./wemo.sh remote_status
-RETVAL=$?
-if [ "$RETVAL" -ne 1 ]; then
-    LIGHT="false"
-else
-    LIGHT="true"
-fi
+./heating.sh
+HEATING=$?
+
+./light.sh
+LIGHT=$?
 
 cpuTemp0=$(cat /sys/class/thermal/thermal_zone0/temp)
 cpuTemp1=$(($cpuTemp0/1000))
@@ -66,7 +64,7 @@ cpuTempM=$(($cpuTemp2 % $cpuTemp1))
 RPITEMP="$cpuTemp1"."$cpuTempM"
 #SYSFREQ=$(($cpuFreq/1000))
 
-debug "airTemp=$AIRTEMP soilTemp=$SOILTEMP rpiTemp=$RPITEMP sysUpTime=$UP soilHum=$SOILHUM airHum=$AIRHUM"
+debug "airTemp=$AIRTEMP soilTemp=$SOILTEMP rpiTemp=$RPITEMP sysUpTime=$UP soilHum=$SOILHUM airHum=$AIRHUM  heating=$HEATING light=$LIGHT"
 
 
 curl -i -X POST -d "auth=$API_SECRET" \
@@ -76,6 +74,18 @@ curl -i -X POST -d "auth=$API_SECRET" \
     -d "sysUpTime=$UP" \
     -d "soilHum=$SOILHUM" \
     -d "airHum=$AIRHUM" \
+    -d "heating=$HEATING" \
+    -d "light=$LIGHT" \
     $API_URL/add >/dev/null 2>&1
+
+if (( $(echo "$SOILTEMP < $LOW_TEMP" |bc -l) )); then
+    debug "Soil temperature $SOILTEMP - turning heating on"
+    ./heating 1
+fi
+
+if (( $(echo "$SOILTEMP > $HIGH_TEMP" |bc -l) )); then
+    debug "Soil temperature $SOILTEMP - turning heating off"
+    ./heating 0
+fi
 
 script_end
