@@ -157,15 +157,15 @@ jQuery(document).ready(function() {
             }
         });
 
-        chart.addSeries({
-            id: 'ardTemp',
-            name: 'Arduino Temperature',
-            visible: false,
-            yAxis: 0,
-            tooltip: {
-                valueSuffix: ' °C'
-            }
-        });
+        //chart.addSeries({
+            //id: 'ardTemp',
+            //name: 'Arduino Temperature',
+            //visible: false,
+            //yAxis: 0,
+            //tooltip: {
+                //valueSuffix: ' °C'
+            //}
+        //});
 
         chart.addSeries({
             id: 'airTemp',
@@ -177,15 +177,15 @@ jQuery(document).ready(function() {
             }
         });
 
-        chart.addSeries({
-            id: 'soilHum1',
-            name: 'Soil Humidity',
-            visible: false,
-            yAxis: 1,
-            tooltip: {
-                valueSuffix: '%'
-            }
-        });
+        //chart.addSeries({
+            //id: 'soilHum1',
+            //name: 'Soil Humidity',
+            //visible: false,
+            //yAxis: 1,
+            //tooltip: {
+                //valueSuffix: '%'
+            //}
+        //});
 
         chart.addSeries({
             id: 'airHum',
