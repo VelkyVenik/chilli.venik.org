@@ -4,18 +4,46 @@ var chart;
 
 // Parse GET parameters
 function getParams(param) {
-	var vars = {};
-	window.location.href.replace( location.hash, '' ).replace( 
-		/[?&]+([^=&]+)=?([^&]*)?/gi, // regexp
-		function( m, key, value ) { // callback
-			vars[key] = value !== undefined ? value : '';
-		}
-	);
+    var vars = {};
+    window.location.href.replace(location.hash, '').replace(
+        /[?&]+([^=&]+)=?([^&]*)?/gi, // regexp
+        function(m, key, value) { // callback
+            vars[key] = value !== undefined ? value : '';
+        }
+    );
 
-	if ( param ) {
-		return vars[param] ? vars[param] : null;	
-	}
-	return vars;
+    if (param) {
+        return vars[param] ? vars[param] : null;
+    }
+    return vars;
+}
+
+function getCookies(param) {
+    var vars = {};
+    document.cookie.replace(
+        /([^= ;]+)=?([^;]*)?/gi, // regexp
+        function(m, key, value) { // callback
+            vars[key] = value !== undefined ? value : '';
+        }
+
+    );
+
+    if (param) {
+        return vars[param] ? vars[param] : null;
+    }
+
+    return vars;
+}
+
+function saveSeries(e) {
+    var serie = e.target;
+
+    var d = new Date();
+    d.setTime(d.getTime() + (100*24*60*60*1000));
+    var expires = 'expires='+d.toUTCString();
+    
+
+    document.cookie = serie.options.id + '=' + (serie.visible ? 0 : 1) + '; ' + expires;
 }
 
 jQuery(document).ready(function() {
@@ -112,6 +140,13 @@ jQuery(document).ready(function() {
         legend: {
             enabled: true
         },
+        plotOptions: {
+            series: {
+                events: {
+                    legendItemClick: saveSeries
+                }
+            }
+        },
         series: []
     };
 
@@ -126,6 +161,7 @@ jQuery(document).ready(function() {
     function refreshData() {
         $.get('/log/getLog', function(data) {
             var params = getParams();
+            var cookies = getCookies();
 
             // set data to chart
             $(chart.series).each(function(i, s) {
@@ -133,7 +169,7 @@ jQuery(document).ready(function() {
                 chart.get(id).setData(data[id], false);
 
                 // show series enabled in GET parameters
-                if (params[id]) {
+                if ((params[id] == 1) || (cookies[id] == 1)) {
                     chart.get(id).show();
                 }
             });
@@ -180,13 +216,13 @@ jQuery(document).ready(function() {
         });
 
         //chart.addSeries({
-            //id: 'ardTemp',
-            //name: 'Arduino Temperature',
-            //visible: false,
-            //yAxis: 0,
-            //tooltip: {
-                //valueSuffix: ' °C'
-            //}
+        //id: 'ardTemp',
+        //name: 'Arduino Temperature',
+        //visible: false,
+        //yAxis: 0,
+        //tooltip: {
+        //valueSuffix: ' °C'
+        //}
         //});
 
         chart.addSeries({
@@ -200,13 +236,13 @@ jQuery(document).ready(function() {
         });
 
         //chart.addSeries({
-            //id: 'soilHum1',
-            //name: 'Soil Humidity',
-            //visible: false,
-            //yAxis: 1,
-            //tooltip: {
-                //valueSuffix: '%'
-            //}
+        //id: 'soilHum1',
+        //name: 'Soil Humidity',
+        //visible: false,
+        //yAxis: 1,
+        //tooltip: {
+        //valueSuffix: '%'
+        //}
         //});
 
         chart.addSeries({
