@@ -112,7 +112,6 @@ jQuery(document).ready(function() {
             // set data to chart
             $(chart.series).each(function(i, s) {
                 var id = s.options.id;
-                console.log(id);
                 chart.get(id).setData(data[id], false);
             });
 
