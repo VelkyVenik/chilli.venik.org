@@ -109,14 +109,24 @@ jQuery(document).ready(function() {
 
     function refreshData() {
         $.get('/log/getLog', function(data) {
-            chart.series[0].setData(data.soilTemp);
-            chart.series[1].setData(data.rpiTemp);
-            chart.series[2].setData(data.ardTemp);
-            chart.series[3].setData(data.airTemp);
-            chart.series[4].setData(data.soilHum1);
-            chart.series[5].setData(data.airHum);
-            chart.series[6].setData(data.heating);
-            chart.series[7].setData(data.light);
+            chart.series[0].setData(data.soilTemp, false);
+            chart.series[1].setData(data.rpiTemp, false);
+            chart.series[2].setData(data.ardTemp, false);
+            chart.series[3].setData(data.airTemp, false);
+            chart.series[4].setData(data.soilHum1, false);
+            chart.series[5].setData(data.airHum, false);
+            chart.series[6].setData(data.heating, false);
+            chart.series[7].setData(data.light, false);
+
+            // Update selector to show the latest data
+            var extremes = chart.xAxis[0].getExtremes();
+            var range = extremes['max'] - extremes['min'];
+
+            if (extremes['max'] < extremes['dataMax']) {
+                chart.xAxis[0].setExtremes(extremes['dataMax'] - range, extremes['dataMax'], false);
+            }
+
+            chart.redraw();
         });
 
     }
