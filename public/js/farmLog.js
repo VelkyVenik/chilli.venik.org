@@ -109,14 +109,12 @@ jQuery(document).ready(function() {
 
     function refreshData() {
         $.get('/log/getLog', function(data) {
-            chart.series[0].setData(data.soilTemp, false);
-            chart.series[1].setData(data.rpiTemp, false);
-            chart.series[2].setData(data.ardTemp, false);
-            chart.series[3].setData(data.airTemp, false);
-            chart.series[4].setData(data.soilHum1, false);
-            chart.series[5].setData(data.airHum, false);
-            chart.series[6].setData(data.heating, false);
-            chart.series[7].setData(data.light, false);
+            // set data to chart
+            $(chart.series).each(function(i, s) {
+                var id = s.options.id;
+                console.log(id);
+                chart.get(id).setData(data[id], false);
+            });
 
             // Update selector to show the latest data
             var extremes = chart.xAxis[0].getExtremes();
@@ -141,6 +139,7 @@ jQuery(document).ready(function() {
 
     function addSeries() {
         chart.addSeries({
+            id: 'soilTemp',
             name: 'Soil Temperature',
             yAxis: 0,
             tooltip: {
@@ -149,6 +148,7 @@ jQuery(document).ready(function() {
         });
 
         chart.addSeries({
+            id: 'rpiTemp',
             name: 'RPi Temperature',
             visible: false,
             yAxis: 0,
@@ -158,6 +158,7 @@ jQuery(document).ready(function() {
         });
 
         chart.addSeries({
+            id: 'ardTemp',
             name: 'Arduino Temperature',
             visible: false,
             yAxis: 0,
@@ -167,6 +168,7 @@ jQuery(document).ready(function() {
         });
 
         chart.addSeries({
+            id: 'airTemp',
             name: 'Air Temperature',
             visible: false,
             yAxis: 0,
@@ -176,6 +178,7 @@ jQuery(document).ready(function() {
         });
 
         chart.addSeries({
+            id: 'soilHum1',
             name: 'Soil Humidity',
             visible: false,
             yAxis: 1,
@@ -185,6 +188,7 @@ jQuery(document).ready(function() {
         });
 
         chart.addSeries({
+            id: 'airHum',
             name: 'Air Humidity',
             visible: false,
             yAxis: 1,
@@ -194,6 +198,7 @@ jQuery(document).ready(function() {
         });
 
         chart.addSeries({
+            id: 'heating',
             name: 'Heating',
             visible: false,
             yAxis: 2,
@@ -203,6 +208,7 @@ jQuery(document).ready(function() {
         });
 
         chart.addSeries({
+            id: 'light',
             name: 'Light',
             visible: false,
             yAxis: 2,
