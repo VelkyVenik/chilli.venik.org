@@ -2,6 +2,22 @@
 /*global Highcharts*/
 var chart;
 
+// Parse GET parameters
+function getParams(param) {
+	var vars = {};
+	window.location.href.replace( location.hash, '' ).replace( 
+		/[?&]+([^=&]+)=?([^&]*)?/gi, // regexp
+		function( m, key, value ) { // callback
+			vars[key] = value !== undefined ? value : '';
+		}
+	);
+
+	if ( param ) {
+		return vars[param] ? vars[param] : null;	
+	}
+	return vars;
+}
+
 jQuery(document).ready(function() {
     var options = {
         chart: {
@@ -109,10 +125,17 @@ jQuery(document).ready(function() {
 
     function refreshData() {
         $.get('/log/getLog', function(data) {
+            var params = getParams();
+
             // set data to chart
             $(chart.series).each(function(i, s) {
                 var id = s.options.id;
                 chart.get(id).setData(data[id], false);
+
+                // show series enabled in GET parameters
+                if (params[id]) {
+                    chart.get(id).show();
+                }
             });
 
             // Update selector to show the latest data
